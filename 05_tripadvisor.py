@@ -19,7 +19,8 @@ class TripAdvisor(CrawlSpider):
     custom_settings = {
         "USER_AGENT":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
         'FEED_EXPORT_ENCODING': 'utf-8',
-        'FEED_EXPORT_FIELDS': ['name', 'score', 'description', 'amenities']
+        'FEED_EXPORT_FIELDS': ['name', 'score', 'description', 'amenities'],
+        'CONCURRENT_REQUESTS': 10
     }
 
     start_urls = ['https://www.tripadvisor.com.pe/Hotels-g15221234-San_Isidro_Lima_Region-Hotels.html']
