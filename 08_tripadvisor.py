@@ -27,7 +27,8 @@ class TripAdvisor(CrawlSpider):
     allowed_domains = ['tripadvisor.com.pe']
 
     start_urls = ["https://www.tripadvisor.com.pe/Hotels-g15221234-San_Isidro_Lima_Region-Hotels.html"]
-
+    
+    # restrict_xpaths: restric the section where we are gonna get the links to scrapy, with this we avoid duplicates.
     rules = (
         Rule(LinkExtractor(r'-oa\d+'), follow = True), # Pagination of Hotels
         Rule(LinkExtractor(r'/Hotel_Review-', restrict_xpaths=["//div[@id='taplc_hsx_hotel_list_lite_dusty_hotels_combined_sponsored_0']//a[@data-clicksource='HotelName']"]), follow = True), # Detail of Hotel 
