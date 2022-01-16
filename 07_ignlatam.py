@@ -13,7 +13,7 @@ class Article(Item):
     content = Field()
 
 class Review(Item):
-    titlte = Field()
+    title = Field()
     score = Field()
 
 class Video(Item):
@@ -25,7 +25,7 @@ class IGNCrawler(CrawlSpider):
     custom_settings = {
         "USER_AGENT":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
         #"FEED_EXPORT_ENCODING": "utf-8",
-        "CLOSESPIDER_PAGECOUNT": 10 # Count of the number of pages that Scrapy visits.
+        "CLOSESPIDER_PAGECOUNT": 30 # Count of the number of pages that Scrapy visits.
     }
 
     download_delay = 1
@@ -41,7 +41,7 @@ class IGNCrawler(CrawlSpider):
         
         Rule(LinkExtractor(r'type='), follow = True), # Type (Article, Review , Video) - Horizontal
         
-        Rule(LinkExtractor(r'&page=\d+'), follow = True), # Pagination - Horizontal
+        Rule(LinkExtractor(r'&page=\d+'), follow = True), # Pagination - Horizontal , "\d+" means any number followed by = 
         
         Rule(LinkExtractor(r'/review/'), follow = True, callback='parse_review'), # Detail of Review - Vertical
         
