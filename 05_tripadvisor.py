@@ -18,11 +18,13 @@ class TripAdvisor(CrawlSpider):
     name = "TripAdvisorHotels"
     custom_settings = {
         "USER_AGENT":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
-        'FEED_EXPORT_ENCODING': 'utf-8'
+        'FEED_EXPORT_ENCODING': 'utf-8',
+        'FEED_EXPORT_FIELDS': ['name', 'score', 'description', 'amenities']
     }
 
     start_urls = ['https://www.tripadvisor.com.pe/Hotels-g15221234-San_Isidro_Lima_Region-Hotels.html']
-
+    
+    # Range between 0.5 * download_delay and 1.5 * download_delay
     download_delay = 2
 
     # follow: the links of Hotel_Review, should i follow them? True or False
@@ -33,6 +35,12 @@ class TripAdvisor(CrawlSpider):
             ), follow = True, callback = 'parse_hotel'
         ),
     )
+
+    def parse_start_url(self, response):
+        sel = Selector(response)
+        hoteles = sel.xpath('//div[@class="prw_rup prw_meta_hsx_listing_name listing-title"]')
+        print("Numero de hoteles", len(hoteles))
+         
 
     def round_score_to_upper(self, text):
         score = str(round(int(text[0])))
@@ -49,5 +57,9 @@ class TripAdvisor(CrawlSpider):
 
         yield item.load_item()
  
-
-
+process = CrawlerProcess({
+    'FEED_FORMAT': 'csv',
+    'FEED_URI': 'tripadvisor.csv'
+})    
+process.crawl(TripAdvisor)
+process.start()
