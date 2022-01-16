@@ -25,6 +25,7 @@ class TripAdvisor(CrawlSpider):
 
     download_delay = 2
 
+    # follow: the links of Hotel_Review, should i follow them? True or False
     rules = (
             Rule(
             LinkExtractor(
