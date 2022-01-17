@@ -1,9 +1,11 @@
 import requests
+import pandas as pd
 
 headers = {
     "referer": "https://www.udemy.com/courses/search/?q=python&skip_price=false"
 }
 
+course_data = []
 for i in range(1,4):
     url_api = f'https://www.udemy.com/api-2.0/search-courses/?p={i}&q=python&skip_price=false'
 
@@ -13,6 +15,11 @@ for i in range(1,4):
     courses = data['courses']
 
     for course in courses:
-        title = course['title']
-        num_reviews = course['num_reviews']
-        print(i, ' - ', num_reviews, ' - ', title)
+        course_data.append( {
+            'title': course['title'],
+            'num_reviews': course['num_reviews'],
+            'page': i
+        })
+           
+df = pd.DataFrame(course_data)
+print(df[:15])
