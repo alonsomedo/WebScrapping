@@ -132,3 +132,5 @@ dmypy.json
 *.parquet
 
 *.exe
+
+credentials.txt
