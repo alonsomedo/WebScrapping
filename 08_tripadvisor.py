@@ -47,7 +47,7 @@ class TripAdvisor(CrawlSpider):
         sel = Selector(response)
         reviews = sel.xpath("//div[@id='content']/div/div")
 
-        autor = sel.xpath("//h1/span/text()").get()
+        autor = sel.xpath("//h1/span/text()").get() # We get the autor name before the iteration.
 
         for ix, review in enumerate(reviews):
             item = ItemLoader(Review(), review)
